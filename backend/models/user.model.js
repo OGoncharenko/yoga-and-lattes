@@ -12,15 +12,31 @@ const userSchema = new Schema({
     required: true,
     unique: true,
   },
+  password: {
+    type: String,
+    required: true,
+  },
   img: {
    type: String,
   },
   savedPosts: {
     type: [String],
     default: [],
-  }
+  },
+  lastLogin: {
+    type: Date,
+    default: Date.now,
+  },
+  isVerified: {
+    type: Boolean,
+    default: false,
+  },
+  resetPasswordToken: String,
+  resetPasswordExpires: Date,
+  verificationToken: String,
+  verificationTokenExpires: Date,
 },
   {timestamps: true}
 );
 
-export default mongoose.model("User", userSchema);
+export const User = mongoose.model("User", userSchema);
