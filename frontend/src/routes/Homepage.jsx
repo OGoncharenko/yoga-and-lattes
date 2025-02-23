@@ -1,8 +1,9 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Link} from "react-router-dom";
 import MainCategories from "../components/MainCategories.jsx";
 import FeaturedPosts from "../components/FeaturedPosts.jsx";
 import PostsList from "../components/PostsList.jsx";
+import {useAuthStore} from "../store/authStore.js";
 
 const Homepage = () => {
   return (

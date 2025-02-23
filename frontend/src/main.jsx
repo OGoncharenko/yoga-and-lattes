@@ -22,8 +22,10 @@ import PostsListPage from "./routes/PostsListPage.jsx";
 import SinglePostPage from "./routes/SinglePostPage.jsx";
 import WritePage from "./routes/WritePage.jsx";
 import LoginPage from "./routes/LoginPage.jsx";
-import RegisterPage from "./routes/RegisterPage.jsx";
+import SignupPage from "./routes/SignupPage.jsx";
 import MainLayout from "./layouts/MainLayout.jsx";
+import VerifyEmailPage from "./routes/VerifyEmailPage.jsx";
+import {Toaster} from "react-hot-toast";
 
 const router = createBrowserRouter([
   {
@@ -50,8 +52,12 @@ const router = createBrowserRouter([
         element: <LoginPage />,
       },
       {
-        path: "/register",
-        element: <RegisterPage />,
+        path: "/signup",
+        element: <SignupPage />,
+      },
+      {
+        path: "/verify-email",
+        element: <VerifyEmailPage />,
       }
     ]
   }
@@ -59,6 +65,7 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
+    <Toaster />
     <RouterProvider router={router} />
   </StrictMode>
 )
