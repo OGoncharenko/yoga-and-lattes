@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Link, useNavigate} from "react-router-dom";
 import {motion} from "framer-motion";
 import InputSignUp from "../components/InputSignUp.jsx";
@@ -7,7 +7,7 @@ import {useAuthStore} from "../store/authStore.js";
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const {login, error, isLoading} = useAuthStore();
+  const {login, error, isLoading, isAuthenticated } = useAuthStore();
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
@@ -15,6 +15,12 @@ const LoginPage = () => {
     await login(email, password);
     navigate('/');
   }
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/');
+    }
+  }, [isAuthenticated]);
 
   return (
     <motion.div

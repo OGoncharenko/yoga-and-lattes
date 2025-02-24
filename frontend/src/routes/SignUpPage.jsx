@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import InputSignUp from "../components/InputSignUp.jsx";
 import {motion} from "framer-motion";
 import {Link, useNavigate} from "react-router-dom";
@@ -9,8 +9,15 @@ const SignUpPage = () => {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const {signup, error, isLoading} = useAuthStore();
+  const {signup, error, isLoading, isAuthenticated} = useAuthStore();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/');
+    }
+  }, [isAuthenticated]);
+
   const handleSignUp = async (e) => {
     e.preventDefault();
     try {

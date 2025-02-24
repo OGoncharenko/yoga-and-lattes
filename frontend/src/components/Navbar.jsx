@@ -1,8 +1,20 @@
 import React, {useState} from 'react';
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
+import {useAuthStore} from "../store/authStore.js";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
+
+  const { isAuthenticated, isLoading, logout  } = useAuthStore();
+
+  const handleClick = async () => {
+    if (isAuthenticated) {
+      await logout();
+    } else {
+      navigate('/login');
+    }
+  }
 
   return (
     <div className="w-full h-16 md:h-20 flex items-center justify-between">
@@ -22,11 +34,9 @@ const Navbar = () => {
             <Link to="/" className="py-2">Trending</Link>
             <Link to="/" className="py-2">Most popular</Link>
             <Link to="/" className="py-2">About</Link>
-            <Link to="/" className="px-4">
-              <button className="py-2 px-4 bg-blue-500 text-white rounded-3xl">
-                Login
-              </button>
-            </Link>
+            <button onClick={handleClick} className="px-4 py-2 bg-blue-500 text-white rounded-3xl">
+              {isLoading ? "Loading..." : isAuthenticated ? "Logout" : "Login"}
+            </button>
           </div>
         )}
       </div>
@@ -36,11 +46,9 @@ const Navbar = () => {
         <Link to="/">Trending</Link>
         <Link to="/">Most popular</Link>
         <Link to="/">About</Link>
-        <Link to="/" className="px-4">
-          <button className="py-2 px-4 bg-blue-500 text-white rounded-3xl">
-            Login
-          </button>
-        </Link>
+        <button onClick={handleClick} className="px-4 py-2 bg-blue-500 text-white rounded-3xl">
+          {isLoading ? "Loading..." : isAuthenticated ? "Logout" : "Login"}
+        </button>
       </div>
     </div>
   );

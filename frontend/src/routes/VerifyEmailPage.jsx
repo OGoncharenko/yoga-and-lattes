@@ -9,7 +9,13 @@ const VerifyEmailPage = () => {
   const inputRefs = useRef([]);
   const navigate = useNavigate();
 
-  const {error, isLoading, verifyEmail} = useAuthStore();
+  const {error, isLoading, verifyEmail, isAuthenticated} = useAuthStore();
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/');
+    }
+  }, [isAuthenticated]);
 
   const handleChange = (index, value) => {
     const newCode = [...code];

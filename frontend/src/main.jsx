@@ -1,15 +1,3 @@
-// import React from "react";
-// import ReactDOM from "react-dom/client";
-// import { BrowserRouter } from "react-router";
-// import App from "./app";
-// import './index.css'
-//
-// const root = document.getElementById("root");
-//
-// ReactDOM.createRoot(root).render(
-//     <App />
-// );
-
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
@@ -26,6 +14,7 @@ import SignupPage from "./routes/SignupPage.jsx";
 import MainLayout from "./layouts/MainLayout.jsx";
 import VerifyEmailPage from "./routes/VerifyEmailPage.jsx";
 import {Toaster} from "react-hot-toast";
+import App from "./App.jsx";
 
 const router = createBrowserRouter([
   {
@@ -66,6 +55,7 @@ const router = createBrowserRouter([
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <Toaster />
-    <RouterProvider router={router} />
+    {/*<RouterProvider router={router} />*/}
+    <App />
   </StrictMode>
 )
