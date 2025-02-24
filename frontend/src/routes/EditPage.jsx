@@ -1,20 +1,23 @@
 import React, {useEffect, useState} from 'react';
 import 'react-quill-new/dist/quill.snow.css';
 import ReactQuill from 'react-quill-new';
-import {useMutation} from "@tanstack/react-query";
+import {useMutation, useQuery} from "@tanstack/react-query";
 import axios from "axios";
 import {useAuthStore} from "../store/authStore.js";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 
-const WritePage = () => {
+const EditPage = () => {
   const { isAuthenticated, isCheckingAuth } = useAuthStore();
   const navigate = useNavigate();
-  const mutation = useMutation({
-    mutationFn: async (newPost) => {
-      return axios.post(`${import.meta.env.VITE_API_URL}/posts`, newPost)
-    }
-  })
-  const { mutate, isSuccess, data: mutationData } = mutation;
+  const { postSlug } = useParams();
+  const {data, isFetched} = useQuery({
+    queryKey: ['post', postSlug],
+    queryFn: async () => {
+      return axios.get(`${import.meta.env.VITE_API_URL}/posts/${postSlug}`)
+    },
+  });
+
+  const [post, setPost] = useState(null);
 
   useEffect(() => {
     if(!isCheckingAuth && !isAuthenticated) {
@@ -23,26 +26,37 @@ const WritePage = () => {
   }, [isAuthenticated, isCheckingAuth]);
 
   useEffect(() => {
-    if (isSuccess) {
-      const { data: { slug } } = mutationData;
-      navigate(`/${slug}`);
+    if(isFetched) {
+      setPost(data.data);
     }
-  }, [isSuccess]);
+  }, [data, isFetched]);
 
-  const [value, setValue] = useState('');
+  const mutation = useMutation({
+    mutationFn: async (newPost) => {
+      return axios.put(`${import.meta.env.VITE_API_URL}/posts/${post._id}`, newPost)
+    }
+  })
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const formData = new FormData(e.target);
-    const data = {
-      title: formData.get('title'),
-      category: formData.get('category'),
-      description: formData.get('description'),
-      content: value,
+    mutation.mutate(post);
+    if (mutation.isSuccess) {
+      navigate(`/${postSlug}`);
     }
-
-    mutate(data);
   }
+
+  const handleChange = (e) => {
+    setPost({...post, [e.target.name]: e.target.value})
+  }
+
+  const handleDelete = async () => {
+    const result = await axios.delete(`${import.meta.env.VITE_API_URL}/posts/${post._id}`);
+    if (result.status === 200) {
+      navigate('/');
+    }
+  }
+
+  if (!post) return null;
 
   return (
     <div className='h-[calc(100vh-4rem)] md:h-[calc(100vh-5rem)] flex flex-col gap-6'>
@@ -57,6 +71,8 @@ const WritePage = () => {
             className='text-4xl font-semibold outline-none bg-transparent'
             id='title'
             name='title'
+            value={post?.title}
+            onChange={handleChange}
           />
         <div className='flex items-center gap-4'>
           <label htmlFor="" className='text-sm'>Choose a category:</label>
@@ -64,6 +80,7 @@ const WritePage = () => {
             className='p-2 rounded-xl bg-white shadow-md outline-none'
             name="category"
             id="category"
+            onChange={handleChange}
           >
             <option value="general">General</option>
             <option value="meditation">Meditation</option>
@@ -76,17 +93,24 @@ const WritePage = () => {
           <textarea
             name='description'
             placeholder="A Short Description"
-            className='p-4 rounded-xl bg-white shadow-md outline-none'/>
+            className='p-4 rounded-xl bg-white shadow-md outline-none'
+            value={post?.description}
+            onChange={handleChange}
+          />
           <ReactQuill
             theme="snow"
             className='flex-1 rounded-xl shadow-md bg-white'
-            value={value}
-            onChange={setValue}
+            value={post?.content}
+            onChange={(value) => setPost({...post, content: value})}
           />
         <button type='submit' className='bg-blue-800 text-white font-medium rounded-xl mt-4 p-2 w-36'>Submit</button>
       </form>
+      <button
+        className='bg-blue-800 text-white font-medium rounded-xl mt-4 p-2 w-36'
+        onClick={handleDelete}
+      >Delete</button>
     </div>
   );
 };
 
-export default WritePage;
+export default EditPage;
