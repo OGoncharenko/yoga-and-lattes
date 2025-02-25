@@ -18,6 +18,23 @@ const EditPage = () => {
   });
 
   const [post, setPost] = useState(null);
+  const [imagePreview, setImagePreview] = useState(post?.img);
+
+  const mutation = useMutation({
+    mutationFn: async (newPost) => {
+      const formData = new FormData();
+      for (const key in newPost) {
+        formData.append(key, newPost[key]);
+      }
+      return axios.put(`${import.meta.env.VITE_API_URL}/posts/${post._id}`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      })
+    }
+  })
+
+  const { mutate, isSuccess } = mutation;
 
   useEffect(() => {
     if(!isCheckingAuth && !isAuthenticated) {
@@ -28,22 +45,38 @@ const EditPage = () => {
   useEffect(() => {
     if(isFetched) {
       setPost(data.data);
+      setImagePreview(data.data.img);
     }
   }, [data, isFetched]);
 
-  const mutation = useMutation({
-    mutationFn: async (newPost) => {
-      return axios.put(`${import.meta.env.VITE_API_URL}/posts/${post._id}`, newPost)
+  useEffect(() => {
+    if (isSuccess) {
+      navigate(`/${postSlug}`);
     }
-  })
+  }, [isSuccess]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    mutation.mutate(post);
+    const formData = new FormData(e.target);
+    const { user, ...updatedPost } = { ...post, img: formData.get('img') };
+    mutate(updatedPost);
     if (mutation.isSuccess) {
       navigate(`/${postSlug}`);
     }
   }
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result);
+      };
+      reader.readAsDataURL(file);
+    } else {
+      setImagePreview('');
+    }
+  };
 
   const handleChange = (e) => {
     setPost({...post, [e.target.name]: e.target.value})
@@ -60,11 +93,18 @@ const EditPage = () => {
 
   return (
     <div className='h-[calc(100vh-4rem)] md:h-[calc(100vh-5rem)] flex flex-col gap-6'>
-      <h1 className='text-xl font-light mt-4'> Create a New Post</h1>
       <form onSubmit={handleSubmit} className='flex flex-col gap-6 flex-1 mb-6'>
-        <button className='w-max p-2 shadow-md rounded-xl text-sm text-gray-400 bg-white'>
+        <label htmlFor="img" className="w-max p-2 shadow-md rounded-xl text-sm text-gray-400 bg-white cursor-pointer">
           Add a cover image
-        </button>
+        </label>
+        <input type="file" name="img" className="hidden" id="img" onChange={(e) => handleImageChange(e)} />
+        {imagePreview && <div className='hidden lg:block lg:w-2/5'>
+          <img
+            src={imagePreview}
+            alt="Image Preview"
+            className='rounded-3xl object-cover'
+          />
+        </div>}
           <input
             type='text'
             placeholder="My Awesome Story"

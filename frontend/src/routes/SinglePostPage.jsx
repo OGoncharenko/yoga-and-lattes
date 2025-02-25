@@ -42,7 +42,7 @@ const SinglePostPage = () => {
         </div>
         <div className='hidden lg:block lg:w-2/5'>
           <img
-            src='/Meditation.jpg'
+            src={post.img}
             alt='placeholder'
             className='rounded-3xl object-cover'
           />
@@ -81,7 +81,6 @@ const SinglePostPage = () => {
             <Link to="/posts?cat=history" className='underline'>History</Link>
             <Link to="/posts?cat=mindset" className='underline'>Mindset</Link>
           </div>
-          <h1 className='mt-8 mb-4 text-sm font-medium'>Search</h1>
           <Search />
         </div>
       </div>

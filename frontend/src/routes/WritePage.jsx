@@ -11,9 +11,18 @@ const WritePage = () => {
   const navigate = useNavigate();
   const mutation = useMutation({
     mutationFn: async (newPost) => {
-      return axios.post(`${import.meta.env.VITE_API_URL}/posts`, newPost)
-    }
-  })
+      const formData = new FormData();
+      for (const key in newPost) {
+        formData.append(key, newPost[key]);
+      }
+      return axios.post(`${import.meta.env.VITE_API_URL}/posts`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+    },
+  });
+
   const { mutate, isSuccess, data: mutationData } = mutation;
 
   useEffect(() => {
@@ -30,6 +39,7 @@ const WritePage = () => {
   }, [isSuccess]);
 
   const [value, setValue] = useState('');
+  const [imagePreview, setImagePreview] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -38,25 +48,47 @@ const WritePage = () => {
       title: formData.get('title'),
       category: formData.get('category'),
       description: formData.get('description'),
+      img: formData.get('img'),
       content: value,
     }
 
     mutate(data);
   }
 
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result);
+      };
+      reader.readAsDataURL(file);
+    } else {
+      setImagePreview('');
+    }
+  };
+
   return (
     <div className='h-[calc(100vh-4rem)] md:h-[calc(100vh-5rem)] flex flex-col gap-6'>
       <form onSubmit={handleSubmit} className='flex flex-col gap-6 flex-1 mt-8 mb-6'>
-        <button className='w-max p-2 shadow-md rounded-xl text-sm text-gray-400 bg-white'>
+        <label htmlFor="img" className="w-max p-2 shadow-md rounded-xl text-sm text-gray-400 bg-white cursor-pointer">
           Add a cover image
-        </button>
-          <input
-            type='text'
-            placeholder="My Awesome Title"
-            className='text-4xl font-semibold outline-none bg-transparent'
-            id='title'
-            name='title'
+        </label>
+        <input type="file" name="img" className="hidden" id="img" onChange={(e) => handleImageChange(e)} />
+        {imagePreview && <div className='hidden lg:block lg:w-2/5'>
+          <img
+            src={imagePreview}
+            alt="Image Preview"
+            className='rounded-3xl object-cover'
           />
+        </div>}
+        <input
+          type='text'
+          placeholder="My Awesome Title"
+          className='text-4xl font-semibold outline-none bg-transparent'
+          id='title'
+          name='title'
+        />
         <div className='flex items-center gap-4'>
           <label htmlFor="" className='text-sm'>Choose a category:</label>
           <select
@@ -78,7 +110,7 @@ const WritePage = () => {
             className='p-4 rounded-xl bg-white shadow-md outline-none'/>
           <ReactQuill
             theme="snow"
-            className='flex-1 rounded-xl shadow-md bg-white'
+            className="flex-1 rounded-xl shadow-md bg-white text-2xl"
             value={value}
             onChange={setValue}
           />
