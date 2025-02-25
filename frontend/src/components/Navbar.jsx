@@ -31,8 +31,7 @@ const Navbar = () => {
         {open && (
           <div className="fixed top-16 left-0 w-full h-screen flex flex-col items-center justify-center gap-8 font-medium text-lg bg-[#FAF0E6FF] opacity-90 transition-all ease-in-out">
             <Link to="/" className="py-2">Home</Link>
-            <Link to="/" className="py-2">Trending</Link>
-            <Link to="/" className="py-2">Most popular</Link>
+            <Link to={`/posts?user=${user._id}`} className="py-2">My Posts</Link>
             <Link to="/profile" className="py-2">Profile</Link>
             <button onClick={handleClick} className="px-4 py-2 bg-[#e2ccbf] text-[#613010] rounded-3xl">
               {isLoading ? "Loading..." : isAuthenticated ? user.username : "Login"}
@@ -43,8 +42,7 @@ const Navbar = () => {
       {/*desktop menu*/}
       <div className="hidden md:flex items-center gap-6 font-medium text-[#613010]">
         <Link to="/">Home</Link>
-        <Link to="/">Trending</Link>
-        <Link to="/">Most popular</Link>
+        {!!user && <Link to={`/posts?user=${user._id}`} className="py-2">My Posts</Link>}
         <button onClick={handleClick} className="px-4 py-2 bg-[#e2ccbf] text-[#613010] rounded-3xl">
           {isLoading ? "Loading..." : isAuthenticated ? user.username : "Login"}
         </button>

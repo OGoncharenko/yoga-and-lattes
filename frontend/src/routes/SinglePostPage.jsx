@@ -33,7 +33,7 @@ const SinglePostPage = () => {
               <Link to="/test" className='text-blue-800'> {post.user.username}</Link>
             </span>
             <span className='text-gray-600'> in </span>
-            <Link to="/test" className='text-blue-800'>{post.category}</Link>
+            <Link to={`/posts?category=${post.category}`} className='text-blue-800'>{post.category}</Link>
             <span className='text-gray-600'>2 days ago</span>
           </div>
           <p className='text-gray-500 font-medium'>

@@ -3,10 +3,10 @@ import {User} from '../models/user.model.js';
 import jwt from 'jsonwebtoken';
 
 export const getPosts = async (req, res) => {
-  console.log(req.query);
   const search = req.query.search ? { title: { $regex: req.query.search, $options: 'i' } } : {};
   const categoryFilter = req.query.category ? { category: req.query.category } : {};
-  const filters = { ...search, ...categoryFilter };
+  const userFilter = req.query.user ? { user: req.query.user } : {};
+  const filters = { ...search, ...categoryFilter, ...userFilter };
   const sort = req.query.sort === 'asc' ? { createdAt: 1 } : { createdAt: -1 };
   const posts = await Post.find(filters).sort(sort).populate('user', 'username');
   res.status(200).send(posts);
