@@ -9,6 +9,7 @@ import {
   sendWelcomeEmail
 } from "../mailtrap/emails.js";
 import {User} from "../models/user.model.js";
+import Post from "../models/post.model.js"
 
 export const signup = async (req, res) => {
   const {email, password, username} = req.body;
@@ -166,12 +167,20 @@ export const checkAuth = async (req, res) => {
     if(!user) {
       return res.status(400).json({success: false, message: "User not found"});
     }
-
-    res.status(200).json({success: true, user: {
-      ...user._doc,
-      password: undefined,
+    const postCount = await Post.countDocuments({ user: user._id });
+    res.status(200).json({
+      success: true,
+      user: {
+        ...user._doc,
+        password: undefined,
+        postCount,
       }
-  });
+    });
+  //   res.status(200).json({success: true, user: {
+  //     ...user._doc,
+  //     password: undefined,
+  //     }
+  // });
 } catch (error) {
   console.log("Error checking auth", error);
   return res.status(400).json({success: false, message: error.message});

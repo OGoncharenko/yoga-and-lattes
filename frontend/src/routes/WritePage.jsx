@@ -46,14 +46,13 @@ const WritePage = () => {
 
   return (
     <div className='h-[calc(100vh-4rem)] md:h-[calc(100vh-5rem)] flex flex-col gap-6'>
-      <h1 className='text-xl font-light mt-4'> Create a New Post</h1>
-      <form onSubmit={handleSubmit} className='flex flex-col gap-6 flex-1 mb-6'>
+      <form onSubmit={handleSubmit} className='flex flex-col gap-6 flex-1 mt-8 mb-6'>
         <button className='w-max p-2 shadow-md rounded-xl text-sm text-gray-400 bg-white'>
           Add a cover image
         </button>
           <input
             type='text'
-            placeholder="My Awesome Story"
+            placeholder="My Awesome Title"
             className='text-4xl font-semibold outline-none bg-transparent'
             id='title'
             name='title'

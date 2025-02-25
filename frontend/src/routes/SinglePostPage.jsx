@@ -23,7 +23,7 @@ const SinglePostPage = () => {
   return (
     <div className='flex flex-col gap-8'>
       {/*details*/}
-      <div className='flex gap-8'>
+      <div className='flex gap-8 mt-8'>
         <div className='lg:w-3/5 flex flex-col gap-8'>
           <h1 className='text-xl md:text-3xl xl:text-4xl 2xl:text-5xl font-semibold'>
             { post.title }
@@ -49,22 +49,19 @@ const SinglePostPage = () => {
         </div>
       </div>
       {/*content*/}
-      <div className='flex flex-col md:flex-row gap-8'>
+      <div className='flex flex-col md:flex-row gap-8 justify-between'>
         {/*text*/}
         <div className='lg:text-lg flex flex-col gap-6 text-justify' dangerouslySetInnerHTML={{ __html: post.content }} />
         {/*menu*/}
         <div className='px-4 h-max sticky top-8'>
-          <h1 className='mb-4 text-sm font-medium'>Author</h1>
+          <h1 className='mb-4 text-sm font-semibold underline'>Author</h1>
           <div className='flex flex-col gap-4'>
             <div className='flex items-center gap-8'>
               <img src="/human-64.png"
                    className='w-12 h-12 rounded-full stroke-1 stroke-amber-800 object-cover'
               />
-              <Link>John Doe</Link>
             </div>
-            <p className='text-sm text-gray-500'>
-              Lorem ipsum dolor sit amet, consectetur
-            </p>
+              <Link to="/profile" className='text-blue-800'>{post.user.username}</Link>
             <div className='flex gap-2'>
               <Link>
                 <img src="/Instagram_logo.svg" alt="Instagram" className='w-6 h-6' />
@@ -74,8 +71,8 @@ const SinglePostPage = () => {
               </Link>
             </div>
           </div>
-          <PostMenuActions />
-          <h1 className='mt-8 mb-4 text-sm font-medium'>Categories</h1>
+          <PostMenuActions post={post} />
+          <h1 className='mt-8 mb-4 text-sm font-semibold'>Categories</h1>
           <div className="flex flex-col gap-2 text-sm">
             <Link to="/posts" className='underline'>All</Link>
             <Link to="/posts?cat=meditation" className='underline'>Meditation</Link>

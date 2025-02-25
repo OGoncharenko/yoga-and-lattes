@@ -61,7 +61,7 @@ const SignUpPage = () => {
             whileTap={{scale: 0.95}}
             className="w-full py-3 px-4 bg-[#71a8a5] text-white font-bold rounded-lg shadow-lg focus:outline-none transition duration-200"
             type='submit'
-            // isDisabled={isLoading}
+            isDisabled={isLoading}
           >
             {isLoading ? <LuLoaderCircle className="animate-spin mx-auto" size={24}/> : "Sign Up"}
           </motion.button>

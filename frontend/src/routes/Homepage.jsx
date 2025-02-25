@@ -3,7 +3,8 @@ import {Link} from "react-router-dom";
 import MainCategories from "../components/MainCategories.jsx";
 import FeaturedPosts from "../components/FeaturedPosts.jsx";
 import PostsList from "../components/PostsList.jsx";
-import {useAuthStore} from "../store/authStore.js";
+import {CiPen} from "react-icons/ci";
+import {PiFlowerLotus} from "react-icons/pi";
 
 const Homepage = () => {
   return (
@@ -35,7 +36,9 @@ const Homepage = () => {
               <textPath href="#circlePath" startOffset="50%">Share your idea ◌</textPath>
             </text>
           </svg>
-          <button className='absolute top-0 left-0 right-0 bottom-0 m-auto w-20 h-20 bg-blue-800 rounded-full flex items-center justify-center'></button>
+          <button className='absolute top-0 left-0 right-0 bottom-0 m-auto w-20 h-20 bg-[#71a8a5] rounded-full flex items-center justify-center'>
+            <PiFlowerLotus className="text-[#FAF0E6FF] w-10 h-10" />
+          </button>
         </Link>
       </div>
       {/*categories*/}

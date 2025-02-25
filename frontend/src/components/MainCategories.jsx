@@ -1,5 +1,6 @@
 import React from 'react';
 import {Link} from "react-router-dom";
+import Search from "./Search.jsx";
 
 const MainCategories = () => {
   return (
@@ -14,7 +15,8 @@ const MainCategories = () => {
       </div>
       <span className="text-xl font-medium">|</span>
       <div className='bg-gray-100 p-2 rounded-full flex items-center gap-2'>
-        <input type="text" placeholder="Search" className='bg-transparent focus:outline-none' />
+        {/*<input type="text" placeholder="Search" className='bg-transparent focus:outline-none' />*/}
+        <Search />
       </div>
     </div>
   );

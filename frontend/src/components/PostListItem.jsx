@@ -14,7 +14,7 @@ const PostListItem = ({post}) => {
         </Link>
         <div className='flex items-center gap-2 text-gray-400 text-sm'>
           <span className='text-gray-600'>By
-            <Link to="/test" className='text-blue-800'>{post.user.username}</Link>
+            <Link to="/profile" className='text-blue-800'> {post.user.username}</Link>
           </span>
           <span className='text-gray-600'> in </span>
           <Link to="/test" className='text-blue-800'>{post.category}</Link>

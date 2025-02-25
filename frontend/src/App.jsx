@@ -19,6 +19,7 @@ import {
   useQuery,
 } from '@tanstack/react-query'
 import EditPage from "./routes/EditPage.jsx";
+import ProfilePage from "./routes/ProfilePage.jsx";
 
 const queryClient = new QueryClient()
 
@@ -46,6 +47,7 @@ const App = () => {
             <Route path="/verify-email" element={ <VerifyEmailPage /> } />
             <Route path="/forgot-password" element={<ForgotPasswordPage/>} />
             <Route path="/reset-password/:token" element={<ResetPasswordPage/>} />
+            <Route path="/profile" element={<ProfilePage/>} />
           </Routes>
         </MainLayout>
       </BrowserRouter>

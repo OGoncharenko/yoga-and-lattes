@@ -1,8 +1,15 @@
 import React from 'react';
 import Search from "./Search.jsx";
-import {Link} from "react-router-dom";
+import {Link, useLocation, useNavigate, useSearchParams} from "react-router-dom";
 
 const SideMenu = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const handleSort = (event) => {
+    const sort = event.target.value;
+    setSearchParams({ ...Object.fromEntries(searchParams.entries()), sort: sort });
+  }
+
   return (
     <div className='px-4 h-max sticky top-8'>
       <h1 className='mt-4 text-sm font-medium'>Search</h1>
@@ -13,9 +20,10 @@ const SideMenu = () => {
           <input
             type="radio"
             name="sort"
-            value="newest"
+            value="desc"
             id="newest"
             className='appearance-none w-4 h-4 border-blue-800 border-[1.5px] bg-white rounded-sm cursor-pointer checked:bg-blue-800'
+            onClick={handleSort}
           />
           Newest
         </label>
@@ -23,29 +31,10 @@ const SideMenu = () => {
           <input
             type="radio"
             name="sort"
-            value="popular"
-            id="popular"
-            className='appearance-none w-4 h-4 border-blue-800 border-[1.5px] bg-white rounded-sm cursor-pointer checked:bg-blue-800'
-          />
-          Most Popular
-        </label>
-        <label htmlFor="" className='flex items-center gap-2 cursor-pointer'>
-          <input
-            type="radio"
-            name="sort"
-            value="trending"
-            id="trending"
-            className='appearance-none w-4 h-4 border-blue-800 border-[1.5px] bg-white rounded-sm cursor-pointer checked:bg-blue-800'
-          />
-          Trending
-        </label>
-        <label htmlFor="" className='flex items-center gap-2 cursor-pointer'>
-          <input
-            type="radio"
-            name="sort"
-            value="oldest"
+            value="asc"
             id="oldest"
             className='appearance-none w-4 h-4 border-blue-800 border-[1.5px] bg-white rounded-sm cursor-pointer checked:bg-blue-800'
+            onClick={handleSort}
           />
           Oldest
         </label>

@@ -67,7 +67,7 @@ const VerifyEmailPage = () => {
       initial={{opacity: 0, y: 50}}
       animate={{opacity: 1, y: 0}}
       transition={{duration: 0.5}}
-      className="m-auto max-w-md w-full bg-orange-200 bg-opacity-50 backdrop-filter backdrop-blur-xl rounded-2xl shadow-xl overflow-hidden"
+      className="m-auto max-w-md w-full bg-[#e3ccc2] bg-opacity-50 backdrop-filter backdrop-blur-xl rounded-2xl shadow-xl overflow-hidden"
     >
       <div className="p-8">
         <h2 className="text-3xl font-bold mb-6 text-center">
@@ -80,7 +80,7 @@ const VerifyEmailPage = () => {
           <div className="flex justify-between">
             {code.map((digit, index) => (
               <input
-                className="w-12 h-12 text-center border-2 border-gray-300 rounded-lg focus:outline-none focus:border-amber-700"
+                className="w-12 h-12 text-center border-2 border-[#71a8a5] rounded-lg focus:outline-none focus:border-[#71a8a5]"
                 key={index}
                 ref={(el) => (inputRefs.current[index] = el)}
                 type="text"
@@ -101,7 +101,7 @@ const VerifyEmailPage = () => {
           <motion.button
             whileHover={{scale: 1.05}}
             whileTap={{scale: 0.95}}
-            className="w-full py-3 px-4 bg-amber-700 text-white font-bold rounded-lg shadow-lg focus:outline-none transition duration-200"
+            className="w-full py-3 px-4 bg-[#71a8a5] text-white font-bold rounded-lg shadow-lg focus:outline-none transition duration-200"
             type="submit"
             onClick={(e) => {
               e.preventDefault();
