@@ -10,12 +10,10 @@ export const generateTokenAndSetCookie = (res, userId) => {
   console.log("Setting cookie..."); // Debug log
   res.cookie('token', token, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
+    secure: true,
     maxAge: 1000 * 60 * 60 * 24 * 7,
-    domain: process.env.COOKIE_DOMAIN,
-    sameSite: "none",
-    path: "/",
+    sameSite: "None",
   });
-  console.log("Cookies after setting:", res.cookies);
+  console.log("Cookies after setting:", res.getHeaders()['set-cookie']);
   return token;
 }
