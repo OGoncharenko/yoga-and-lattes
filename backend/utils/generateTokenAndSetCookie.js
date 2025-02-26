@@ -16,6 +16,6 @@ export const generateTokenAndSetCookie = (res, userId) => {
     sameSite: "none",
     path: "/",
   });
-  console.log("Cookies after setting:", req.cookies);
+  console.log("Cookies after setting:", res.cookies);
   return token;
 }
