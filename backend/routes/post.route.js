@@ -4,7 +4,6 @@ import {createPost, updatePost, deletePost, getPost, getPosts} from "../controll
 
 const router = express.Router();
 
-// Configure multer storage
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, 'uploads/');

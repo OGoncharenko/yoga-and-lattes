@@ -1,6 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import React, {useEffect} from 'react';
-// import './index.css'
 import PostsListPage from "./routes/PostsListPage.jsx";
 import SinglePostPage from "./routes/SinglePostPage.jsx";
 import WritePage from "./routes/WritePage.jsx";

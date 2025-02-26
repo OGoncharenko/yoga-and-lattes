@@ -176,11 +176,6 @@ export const checkAuth = async (req, res) => {
         postCount,
       }
     });
-  //   res.status(200).json({success: true, user: {
-  //     ...user._doc,
-  //     password: undefined,
-  //     }
-  // });
 } catch (error) {
   console.log("Error checking auth", error);
   return res.status(400).json({success: false, message: error.message});
