@@ -18,41 +18,118 @@ export const getPost = async (req, res) => {
   res.status(200).send(post);
 }
 
+// export const createPost = async (req, res) => {
+//   try {
+//     const slug = req.body.title.toLowerCase().split(" ").join("-");
+//     let imgUrl = '';
+//     if (req.file) {
+//       const result = await cloudinary.uploader.upload(req.file.path);
+//       imgUrl = result.secure_url;
+//     }
+//     const newPost = new Post({
+//       ...req.body,
+//       slug: slug,
+//       user: userId(req),
+//       img: imgUrl,
+//     });
+//     const post = await newPost.save();
+//     res.status(201).json(post);
+//   } catch (error) {
+//     res.status(500).json({ error: error.message });
+//   }
+// }
+
 export const createPost = async (req, res) => {
   try {
     const slug = req.body.title.toLowerCase().split(" ").join("-");
     let imgUrl = '';
+
     if (req.file) {
-      const result = await cloudinary.uploader.upload(req.file.path);
-      imgUrl = result.secure_url;
+      const result = await cloudinary.uploader.upload_stream(
+        { resource_type: "image" },
+        (error, result) => {
+          if (error) return res.status(500).json({ error: error.message });
+          imgUrl = result.secure_url;
+
+          savePost(req, res, slug, imgUrl);
+        }
+      );
+
+      result.end(req.file.buffer); // Send buffer data to Cloudinary
+    } else {
+      savePost(req, res, slug, imgUrl);
     }
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+const savePost = async (req, res, slug, imgUrl) => {
+  try {
     const newPost = new Post({
       ...req.body,
-      slug: slug,
+      slug,
       user: userId(req),
       img: imgUrl,
     });
+
     const post = await newPost.save();
     res.status(201).json(post);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
-}
+};
+
+// export const updatePost = async (req, res) => {
+//   try {
+//     let imgUrl = req.body.img;
+//
+//     if (req.file) {
+//       const result = await cloudinary.uploader.upload(req.file.path);
+//       imgUrl = result.secure_url;
+//     }
+//     const post = await Post.findOneAndUpdate(
+//       { _id: req.params.id, user: userId(req) },
+//       {...req.body,  img: imgUrl},
+//       { new: true }
+//     );
+//     console.log({post});
+//     if (!post) {
+//       return res.status(400).json("Post not found or user not authorized");
+//     } else {
+//       return res.status(200).json("Post has been updated");
+//     }
+//   } catch (error) {
+//     res.status(500).json({ error: error.message });
+//   }
+// }
+
 
 export const updatePost = async (req, res) => {
   try {
     let imgUrl = req.body.img;
 
     if (req.file) {
-      const result = await cloudinary.uploader.upload(req.file.path);
+      const result = await new Promise((resolve, reject) => {
+        const upload = cloudinary.uploader.upload_stream(
+          { resource_type: "image" },
+          (error, result) => {
+            if (error) reject(error);
+            else resolve(result);
+          }
+        );
+
+        upload.end(req.file.buffer);
+      });
+
       imgUrl = result.secure_url;
     }
+
     const post = await Post.findOneAndUpdate(
       { _id: req.params.id, user: userId(req) },
-      {...req.body,  img: imgUrl},
+      { ...req.body, img: imgUrl },
       { new: true }
     );
-    console.log({post});
     if (!post) {
       return res.status(400).json("Post not found or user not authorized");
     } else {
@@ -61,7 +138,7 @@ export const updatePost = async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
-}
+};
 
 export const deletePost = async (req, res) => {
   const post = await Post.findOneAndDelete({
