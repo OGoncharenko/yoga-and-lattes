@@ -23,9 +23,9 @@ const SinglePostPage = () => {
 
   return (
     <div className='flex flex-col gap-8'>
-      <Link to={-1} className='text-blue-800 underline text-md flex items-center gap-3'>
+      <Link to="/" className='text-blue-800 underline text-md flex items-center gap-3'>
         <IoMdArrowRoundBack />
-        Back
+        Back to Home
       </Link>
       {/*details*/}
       <div className='flex gap-8 mt-8'>

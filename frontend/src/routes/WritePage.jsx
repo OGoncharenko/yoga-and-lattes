@@ -80,7 +80,7 @@ const WritePage = () => {
           Add a cover image
         </label>
         <input type="file" name="img" className="hidden" id="img" onChange={(e) => handleImageChange(e)} />
-        {imagePreview && <div className='hidden lg:block lg:w-2/5'>
+        {imagePreview && <div className='lg:block lg:w-2/5'>
           <img
             src={imagePreview}
             alt="Image Preview"

@@ -13,7 +13,7 @@ const MainCategories = () => {
         <Link to="/posts?category=history" className='hover:bg-orange-100 rounded-full px-4 py-2'>History</Link>
         <Link to="/posts?category=mindset" className='hover:bg-orange-100 rounded-full px-4 py-2'>Mindset</Link>
       </div>
-      <span className="text-xl font-medium">|</span>
+      <span className="hidden md:block text-xl font-medium">|</span>
       <div className='bg-gray-100 p-2 rounded-full flex items-center gap-2'>
         <Search />
       </div>

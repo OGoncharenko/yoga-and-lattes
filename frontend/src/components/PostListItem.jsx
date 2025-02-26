@@ -5,8 +5,8 @@ const PostListItem = ({post}) => {
   return (
     <div className='flex flex-col xl:flex-row gap-8'>
       <div className='md:hidden xl:block xl:w-1/3'>
-        {post.img && <img src={post.img} alt="img" className='rounded-2xl object-cover w-full aspect-video'/>}
-        {/*{post.img ? <img src={post.img} alt="img" className='rounded-2xl object-cover w-full aspect-video'/> : <img src='/default_img.png' alt="default" className='rounded-2xl object-cover w-full aspect-video'/>}*/}
+        {/*{post.img && <img src={post.img} alt="img" className='rounded-2xl object-cover w-full aspect-video'/>}*/}
+        {post.img ? <img src={post.img} alt="img" className='rounded-2xl object-cover w-full aspect-video'/> : <img src='/default_img.png' alt="default" className='rounded-2xl object-cover w-full aspect-video'/>}
 
       </div>
       {/*details*/}
