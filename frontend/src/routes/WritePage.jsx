@@ -6,6 +6,7 @@ import axios from "axios";
 import {useAuthStore} from "../store/authStore.js";
 import {Link, useNavigate} from "react-router-dom";
 import {IoMdArrowRoundBack} from "react-icons/io";
+import toast from "react-hot-toast";
 
 const WritePage = () => {
   const { isAuthenticated, isCheckingAuth } = useAuthStore();
@@ -36,6 +37,7 @@ const WritePage = () => {
     if (isSuccess) {
       const { data: { slug } } = mutationData;
       navigate(`/${slug}`);
+      toast.success("Post created successfully");
     }
   }, [isSuccess]);
 
@@ -52,7 +54,6 @@ const WritePage = () => {
       img: formData.get('img'),
       content: value,
     }
-
     mutate(data);
   }
 

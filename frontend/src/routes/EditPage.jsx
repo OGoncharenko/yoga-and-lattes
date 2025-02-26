@@ -5,6 +5,7 @@ import {useMutation, useQuery} from "@tanstack/react-query";
 import axios from "axios";
 import {useAuthStore} from "../store/authStore.js";
 import {useNavigate, useParams} from "react-router-dom";
+import toast from "react-hot-toast";
 
 const EditPage = () => {
   const { isAuthenticated, isCheckingAuth } = useAuthStore();
@@ -52,6 +53,7 @@ const EditPage = () => {
   useEffect(() => {
     if (isSuccess) {
       navigate(`/${postSlug}`);
+      toast.success("Post updated successfully");
     }
   }, [isSuccess]);
 
@@ -62,6 +64,7 @@ const EditPage = () => {
     mutate(updatedPost);
     if (mutation.isSuccess) {
       navigate(`/${postSlug}`);
+      toast.success("Post updated successfully");
     }
   }
 
@@ -86,6 +89,7 @@ const EditPage = () => {
     const result = await axios.delete(`${import.meta.env.VITE_API_URL}/posts/${post._id}`);
     if (result.status === 200) {
       navigate('/');
+      toast.success("Post deleted successfully");
     }
   }
 

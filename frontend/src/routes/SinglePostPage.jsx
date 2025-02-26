@@ -52,7 +52,7 @@ const SinglePostPage = () => {
         </div>
         <div className='hidden lg:block lg:w-2/5'>
           <img
-            src={post.img}
+            src={post.img || '/default_img.png'}
             alt='placeholder'
             className='rounded-3xl object-cover'
           />
