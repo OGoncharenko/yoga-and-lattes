@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import React, {useEffect} from 'react';
+import axios from "axios";
 import PostsListPage from "./routes/PostsListPage.jsx";
 import SinglePostPage from "./routes/SinglePostPage.jsx";
 import WritePage from "./routes/WritePage.jsx";
@@ -15,12 +16,12 @@ import ResetPasswordPage from "./routes/ResetPasswordPage.jsx";
 import {
   QueryClient,
   QueryClientProvider,
-  useQuery,
 } from '@tanstack/react-query'
 import EditPage from "./routes/EditPage.jsx";
 import ProfilePage from "./routes/ProfilePage.jsx";
 
 const queryClient = new QueryClient()
+axios.defaults.withCredentials = true;
 
 const App = () => {
 
