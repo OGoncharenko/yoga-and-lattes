@@ -6,6 +6,7 @@ import Comments from "../components/Comments.jsx";
 import {useQuery} from "@tanstack/react-query";
 import axios from "axios";
 import {IoMdArrowRoundBack} from "react-icons/io";
+import {PiFlowerLotusLight} from "react-icons/pi";
 
 const SinglePostPage = () => {
   const { slug} = useParams();
@@ -16,6 +17,10 @@ const SinglePostPage = () => {
     },
     enabled: !!slug,
   });
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   if (!isFetched) return null;
 
@@ -35,7 +40,7 @@ const SinglePostPage = () => {
           </h1>
           <div className='flex items-center gap-2 text-gray-400 text-sm'>
             <span className='text-gray-600'>By
-              <Link to="/test" className='text-blue-800'> {post.user.username}</Link>
+              <Link to="/profile" className='text-blue-800'> {post.user.username}</Link>
             </span>
             <span className='text-gray-600'> in </span>
             <Link to={`/posts?category=${post.category}`} className='text-blue-800'>{post.category}</Link>
@@ -66,9 +71,7 @@ const SinglePostPage = () => {
           <h1 className='mb-4 text-sm font-semibold underline'>Author</h1>
           <div className='flex flex-col gap-4'>
             <div className='flex items-center gap-8'>
-              <img src="/human-64.png"
-                   className='w-12 h-12 rounded-full stroke-1 stroke-amber-800 object-cover'
-              />
+              <PiFlowerLotusLight className='w-12 h-12 rounded-full bg-[#71a8a5] text-[#fdf0e7] p-2 object-cover'/>
             </div>
               <Link to="/profile" className='text-blue-800'>{post.user.username}</Link>
             <div className='flex gap-2'>

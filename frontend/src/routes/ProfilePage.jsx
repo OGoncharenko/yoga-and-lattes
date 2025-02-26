@@ -39,7 +39,7 @@ const ProfilePage = () => {
           <IoMdClose />
         </button>
       </div>
-      <div className="relative max-w-fit mx-auto my-4 items-center gap-4 p-8 rounded-full shadow-md border-2 border-[#71a8a5]">
+      <div className="relative max-w-fit mx-auto my-4 items-center">
         <Avatar />
       </div>
       <motion.div
@@ -85,7 +85,7 @@ const ProfilePage = () => {
         </p>
       </motion.div>
       <motion.div className="flex items-center justify-center gap-4 p-8">
-        <button onClick={handleClick} className="px-6 py-2 bg-[#71a8a5] text-white rounded-3xl shadow-md">
+        <button onClick={handleClick} className="px-6 py-2 bg-[#71a8a5] text-[#fdf0e7] rounded-3xl shadow-md">
           {isLoading ? "Loading..." : isAuthenticated ? "Logout" : "Login"}
         </button>
       </motion.div>

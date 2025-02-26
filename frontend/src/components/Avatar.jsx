@@ -1,9 +1,10 @@
 import React from 'react';
+import {PiFlowerLotusLight} from "react-icons/pi";
 
 const Avatar = () => {
   return (
     <div>
-      <img src="/human-64.png" alt="avatar" className="h-20 w-20"/>
+      <PiFlowerLotusLight className="w-20 h-20 rounded-full bg-[#71a8a5] text-[#fdf0e7] p-2 object-cover"/>
     </div>
   );
 };

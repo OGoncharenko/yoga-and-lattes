@@ -5,16 +5,11 @@ const Footer = () => {
     <footer className='text-[#613010] py-4 mt-8 w-full flex '>
       <div className='container mx-auto text-center text-xs'>
         <p>&copy; {new Date().getFullYear()} Yoga&Lattes. All rights reserved.</p>
-        <div className='flex justify-center gap-4 mt-2'>
-          <a href='https://www.linkedin.com' target='_blank' rel='noopener noreferrer'>
+        <div className='flex justify-center gap-4 mt-2 items-center'>
+          <a href='https://www.linkedin.com/in/olga-s-goncharenko/' target='_blank' rel='noopener noreferrer'>
             <img src='/linkedin.svg' alt='LinkedIn' className='w-6 h-6' />
           </a>
-          <a href='https://www.facebook.com' target='_blank' rel='noopener noreferrer'>
-            <img src='/facebook.svg' alt='Facebook' className='w-6 h-6' />
-          </a>
-          <a href='https://www.instagram.com' target='_blank' rel='noopener noreferrer'>
-            <img src='/Instagram_logo.svg' alt='Instagram' className='w-6 h-6' />
-          </a>
+            Created by Olga Goncharenko
         </div>
       </div>
     </footer>
