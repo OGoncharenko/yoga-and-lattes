@@ -4,7 +4,8 @@ import ReactQuill from 'react-quill-new';
 import {useMutation} from "@tanstack/react-query";
 import axios from "axios";
 import {useAuthStore} from "../store/authStore.js";
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
+import {IoMdArrowRoundBack} from "react-icons/io";
 
 const WritePage = () => {
   const { isAuthenticated, isCheckingAuth } = useAuthStore();
@@ -69,8 +70,12 @@ const WritePage = () => {
   };
 
   return (
-    <div className='h-[calc(100vh-4rem)] md:h-[calc(100vh-5rem)] flex flex-col gap-6'>
-      <form onSubmit={handleSubmit} className='flex flex-col gap-6 flex-1 mt-8 mb-6'>
+    <div className='h-[calc(100vh-4rem)] md:h-[calc(100vh-5rem)] flex flex-col gap-6 pb-20'>
+      <Link to={-1} className='text-blue-800 underline text-md flex items-center gap-3'>
+        <IoMdArrowRoundBack />
+        Back
+      </Link>
+      <form onSubmit={handleSubmit} className='flex flex-col gap-6 flex-1 mt-8 pb-20'>
         <label htmlFor="img" className="w-max p-2 shadow-md rounded-xl text-sm text-gray-400 bg-white cursor-pointer">
           Add a cover image
         </label>

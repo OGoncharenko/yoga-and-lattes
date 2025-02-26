@@ -5,7 +5,9 @@ const PostListItem = ({post}) => {
   return (
     <div className='flex flex-col xl:flex-row gap-8'>
       <div className='md:hidden xl:block xl:w-1/3'>
-        <img src="/Meditation.jpg" className='rounded-2xl object-cover' />
+        {post.img && <img src={post.img} alt="img" className='rounded-2xl object-cover w-full aspect-video'/>}
+        {/*{post.img ? <img src={post.img} alt="img" className='rounded-2xl object-cover w-full aspect-video'/> : <img src='/default_img.png' alt="default" className='rounded-2xl object-cover w-full aspect-video'/>}*/}
+
       </div>
       {/*details*/}
       <div className='flex flex-col gap-4 xl:w-2/3'>
@@ -18,7 +20,7 @@ const PostListItem = ({post}) => {
           </span>
           <span className='text-gray-600'> in </span>
           <Link to={`/posts?category=${post.category}`} className='text-blue-800'>{post.category}</Link>
-          <span className='text-gray-600'>2 days ago</span>
+          <span className='text-gray-600'>{new Date(post.createdAt).toLocaleDateString()}</span>
         </div>
         <p>
           {post.description}

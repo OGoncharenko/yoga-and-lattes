@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
-import {useLocation, useNavigate, useSearchParams} from "react-router-dom";
+import {Link, useLocation, useNavigate, useSearchParams} from "react-router-dom";
+import {IoMdArrowRoundBack} from "react-icons/io";
 
 const Search = () => {
   const location = useLocation();
@@ -19,15 +20,17 @@ const Search = () => {
   }
 
   return (
-    <div className='bg-gray-100 p-2 rounded-full flex items-center gap-2'>
-      <input
-        type="text"
-        placeholder="Search a post..."
-        className='bg-transparent focus:outline-none'
-        value={search}
-        onKeyDown={handleSearch}
-        onChange={(event) => setSearch(event.target.value)}
-      />
+    <div className='flex items-center gap-4'>
+      <div className='bg-gray-100 p-2 rounded-full flex items-center gap-2'>
+        <input
+          type="text"
+          placeholder="Search a post..."
+          className='bg-transparent focus:outline-none'
+          value={search}
+          onKeyDown={handleSearch}
+          onChange={(event) => setSearch(event.target.value)}
+        />
+      </div>
     </div>
   );
 };

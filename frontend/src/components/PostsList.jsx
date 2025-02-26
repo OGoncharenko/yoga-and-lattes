@@ -12,8 +12,6 @@ const fetchPosts = async (search='') => {
 const PostsList = () => {
   const { search } = useLocation();
 
-  console.log({search})
-
   const {isPending, error, data} = useQuery({
     queryKey: ['repoData', search],
     queryFn: () => fetchPosts(search),

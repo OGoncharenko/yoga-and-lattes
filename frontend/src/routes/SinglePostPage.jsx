@@ -5,6 +5,7 @@ import Search from "../components/Search.jsx";
 import Comments from "../components/Comments.jsx";
 import {useQuery} from "@tanstack/react-query";
 import axios from "axios";
+import {IoMdArrowRoundBack} from "react-icons/io";
 
 const SinglePostPage = () => {
   const { slug} = useParams();
@@ -22,6 +23,10 @@ const SinglePostPage = () => {
 
   return (
     <div className='flex flex-col gap-8'>
+      <Link to={-1} className='text-blue-800 underline text-md flex items-center gap-3'>
+        <IoMdArrowRoundBack />
+        Back
+      </Link>
       {/*details*/}
       <div className='flex gap-8 mt-8'>
         <div className='lg:w-3/5 flex flex-col gap-8'>
@@ -34,7 +39,7 @@ const SinglePostPage = () => {
             </span>
             <span className='text-gray-600'> in </span>
             <Link to={`/posts?category=${post.category}`} className='text-blue-800'>{post.category}</Link>
-            <span className='text-gray-600'>2 days ago</span>
+            <span className='text-gray-600'>{new Date(post.createdAt).toLocaleDateString()}</span>
           </div>
           <p className='text-gray-500 font-medium'>
             {post.description}
@@ -54,6 +59,10 @@ const SinglePostPage = () => {
         <div className='lg:text-lg flex flex-col gap-6 text-justify' dangerouslySetInnerHTML={{ __html: post.content }} />
         {/*menu*/}
         <div className='px-4 h-max sticky top-8'>
+        <div className="mb-4">
+          <h1 className="mb-4 text-sm font-semibold underline">Search</h1>
+          <Search />
+        </div>
           <h1 className='mb-4 text-sm font-semibold underline'>Author</h1>
           <div className='flex flex-col gap-4'>
             <div className='flex items-center gap-8'>
@@ -81,7 +90,6 @@ const SinglePostPage = () => {
             <Link to="/posts?cat=history" className='underline'>History</Link>
             <Link to="/posts?cat=mindset" className='underline'>Mindset</Link>
           </div>
-          <Search />
         </div>
       </div>
       <Comments />

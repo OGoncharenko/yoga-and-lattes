@@ -92,8 +92,16 @@ const EditPage = () => {
   if (!post) return null;
 
   return (
-    <div className='h-[calc(100vh-4rem)] md:h-[calc(100vh-5rem)] flex flex-col gap-6'>
+    <div className='h-[calc(100vh-4rem)] md:h-[calc(100vh-5rem)] flex flex-col gap-6 my-10'>
       <form onSubmit={handleSubmit} className='flex flex-col gap-6 flex-1 mb-6'>
+        <div className="flex justify-end items-center mr-8">
+          <button
+            className="font-bold shadow-md rounded-xl p-2 border-2 border-[#71a8a5] cursor-pointer"
+            onClick={() => navigate(-1)}
+          >
+            Close
+          </button>
+        </div>
         <label htmlFor="img" className="w-max p-2 shadow-md rounded-xl text-sm text-gray-400 bg-white cursor-pointer">
           Add a cover image
         </label>
@@ -143,12 +151,20 @@ const EditPage = () => {
             value={post?.content}
             onChange={(value) => setPost({...post, content: value})}
           />
-        <button type='submit' className='bg-blue-800 text-white font-medium rounded-xl mt-4 p-2 w-36'>Submit</button>
+        <div className="flex justify-between mb-8">
+          <button
+            type='submit'
+            className='bg-[#71a8a5] shadow-md text-white font-medium rounded-xl mt-4 p-2 w-36'>
+            Submit
+          </button>
+          <button
+            className='bg-red-600 shadow-md text-white font-medium rounded-xl mt-4 p-2 w-36'
+            onClick={handleDelete}
+          >
+            Delete
+          </button>
+        </div>
       </form>
-      <button
-        className='bg-blue-800 text-white font-medium rounded-xl mt-4 p-2 w-36'
-        onClick={handleDelete}
-      >Delete</button>
     </div>
   );
 };

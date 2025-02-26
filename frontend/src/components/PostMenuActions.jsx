@@ -8,13 +8,14 @@ const PostMenuActions = ({post}) => {
   const { isAuthenticated, user } = useAuthStore();
 
   return (
-    <div className=''>
-      <h1 className='mt-8 mb-4 text-sm font-semibold underline'>Actions</h1>
-      {isAuthenticated && post.user._id === user._id && (
+    <div className='mt-6'>
+        {isAuthenticated && post.user._id === user._id && (
+      <div className="font-semibold shadow-md rounded-xl px-2 border-2 border-[#71a8a5]  inline-block">
         <Link to={`/edit/${slug}`} className='flex gap-2 items-center py-2 text-sm cursor-pointer'>
           <FaRegEdit />
           <span>Edit this Post</span>
         </Link>
+      </div>
       )}
     </div>
   );

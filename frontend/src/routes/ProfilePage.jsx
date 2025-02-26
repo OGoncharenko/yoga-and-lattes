@@ -4,6 +4,7 @@ import {useAuthStore} from "../store/authStore.js";
 import {motion} from "framer-motion";
 import {FaRegEdit} from "react-icons/fa";
 import {useNavigate} from "react-router-dom";
+import {IoMdClose} from "react-icons/io";
 
 const ProfilePage = () => {
   const {user} = useAuthStore();
@@ -30,12 +31,17 @@ const ProfilePage = () => {
       animate={{opacity: 1, y: 0}}
       transition={{duration: 0.5}}
       className="mx-auto my-8 max-w-lg w-full text-[#613010] items-center bg-[#f5c5aa] bg-opacity-50 backdrop-filter backdrop-blur-xl rounded-2xl shadow-xl overflow-hidden">
+      <div className="flex justify-end items-center m-2">
+        <button
+          className="font-bold shadow-md rounded-full p-2 bg-[#71a8a5] text-white cursor-pointer"
+          onClick={() => navigate(-1)}
+        >
+          <IoMdClose />
+        </button>
+      </div>
       <div className="relative max-w-fit mx-auto my-4 items-center gap-4 p-8 rounded-full shadow-md border-2 border-[#71a8a5]">
         <Avatar />
       </div>
-        <div className="absolute top-0 right-0 p-4">
-          <FaRegEdit />
-        </div>
       <motion.div
         initial={{opacity: 0, y: 20}}
         animate={{opacity: 1, y: 0}}
