@@ -32,7 +32,16 @@ app.use((error, req, res, next) => {
   });
 });
 
-app.listen(PORT, () => {
-  connectDB();
-  console.log("Server is listening on port: ", PORT);
+connectDB().then(() => {
+  app.listen(PORT, () => {
+    console.log(`Server is listening on port: ${PORT}`);
+  });
+}).catch((error) => {
+  console.error("MongoDB connection failed:", error);
+  process.exit(1);
 });
+
+// app.listen(PORT, () => {
+//   connectDB();
+//   console.log("Server is listening on port: ", PORT);
+// });
