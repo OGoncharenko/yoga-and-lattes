@@ -10,7 +10,7 @@ import commentRouter from "./routes/comment.route.js";
 
 dotenv.config();
 
-const app = express();
+export const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(cors({origin: process.env.CLIENT_URL || "http://localhost:5173", credentials: true}));
@@ -32,7 +32,16 @@ app.use((error, req, res, next) => {
   });
 });
 
-app.listen(PORT, () => {
-  connectDB();
-  console.log("Server is listening on port: ", PORT);
+connectDB().then(() => {
+  app.listen(PORT, () => {
+    console.log(`Server is listening on port: ${PORT}`);
+  });
+}).catch((error) => {
+  console.error("MongoDB connection failed:", error);
+  process.exit(1);
 });
+
+// app.listen(PORT, () => {
+//   connectDB();
+//   console.log("Server is listening on port: ", PORT);
+// });
