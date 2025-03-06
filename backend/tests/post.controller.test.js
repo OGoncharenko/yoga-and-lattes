@@ -1,5 +1,5 @@
 import get_chai from '../utils/get_chai.js';
-
+import connectDB from '../db/connectDB.js';
 import mongoose from 'mongoose';
 import { app } from '../index.js';
 import Post from '../models/post.model.js';
@@ -12,12 +12,9 @@ let expect;
 let request;
 
 before(async () => {
-  const mongoURL = process.env.MONGO_URI_TEST;
-  if (!mongoURL) {
-    throw new Error("MONGO_URI_TEST is not defined in environment variables");
-  }
+  await connectDB();
 
-  const chaiObj = await get_chai(); // Wait for chai to be initialized
+  const chaiObj = await get_chai();
   chai = chaiObj.chai;
   expect = chaiObj.expect;
   request = chaiObj.request;
@@ -64,19 +61,6 @@ describe('Post Controller', () => {
       expect(res.body.length).to.equal(1);
       expect(res.body[0].title).to.equal('Post title');
     });
-
-    // it('should filter posts by search query', async () => {
-    //   await Post.create([
-    //     { title: 'First Post', content: 'Content', category: 'test', slug: 'first-post', user: userId },
-    //     { title: 'Second Post', content: 'Content', category: 'test', slug: 'second-post', user: userId }
-    //   ]);
-    //
-    //   const res = await chai.request(app).get('/posts?search=First');
-    //   expect(res).to.have.status(200);
-    //   expect(res.body).to.be.an('array');
-    //   expect(res.body.length).to.equal(1);
-    //   expect(res.body[0].title).to.equal('First Post');
-    // });
   });
 
   describe('POST /posts', () => {
@@ -95,14 +79,6 @@ describe('Post Controller', () => {
       expect(res.body.title).to.equal(postData.title);
       expect(res.body.slug).to.equal('new-post');
     });
-  //
-  //   it('should return 500 if required fields are missing', async () => {
-  //     const res = await chai.request(app)
-  //       .post('/api/posts')
-  //       .set('Cookie', `token=${token}`)
-  //       .send({});
-  //     expect(res).to.have.status(500);
-  //   });
   });
 
   describe('PUT /posts/:id', () => {
@@ -130,16 +106,6 @@ describe('Post Controller', () => {
       const updatedPost = await Post.findById(post._id);
       expect(updatedPost.title).to.equal('Updated Post');
     });
-  //
-  //   it('should return 400 if post not found', async () => {
-  //     const fakeId = new mongoose.Types.ObjectId();
-  //
-  //     const res = await request(app)
-  //       .put(`/api/posts/${fakeId}`)
-  //       .set('Cookie', `token=${token}`)
-  //       .send({ title: 'Updated Post' });
-  //     expect(res).to.have.status(400);
-  //   });
   });
 
   describe('DELETE /posts/:id', () => {

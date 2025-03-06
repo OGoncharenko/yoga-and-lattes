@@ -1,5 +1,3 @@
-// const Post = require("../models/post.model.js");
-// const User = require("../models/user.model.js");
 import mongoose from "mongoose";
 import Post from "../models/post.model.js";
 import { User } from "../models/user.model.js";
@@ -16,12 +14,10 @@ factory.setAdapter(factoryAdapter);
 
 
 export const testUserPassword = faker.internet.password();
-// const factoryAdapter = new MongooseAdapter();
 factory.define("user", User, {
   username: () => faker.person.fullName(),
   email: () => faker.internet.email(),
   password: async () => await bcrypt.hash(testUserPassword, 10),
-  // password: () => faker.internet.password(),
   isVerified: () => true,
 });
 
